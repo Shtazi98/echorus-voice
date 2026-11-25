@@ -1,0 +1,89 @@
+{
+  "format": 1,
+  "title": {
+    "en": "EchoRUS — Russian voice input",
+    "ru": "EchoRUS — голосовой ввод"
+  },
+  "description": {
+    "en": "Local Whisper voice input for DeepSeek Harness. Russian first, any language supported.",
+    "ru": "Локальный голосовой ввод на Whisper для DeepSeek Harness. Русский в приоритете, поддержка любого языка."
+  },
+  "metadata": {
+    "categories": {
+      "input": {
+        "title": {
+          "en": "Input",
+          "ru": "Ввод"
+        }
+      }
+    },
+    "labels": {
+      "offline": {
+        "title": {
+          "en": "Offline",
+          "ru": "Офлайн"
+        }
+      },
+      "russian": {
+        "title": {
+          "en": "Russian",
+          "ru": "Русский"
+        }
+      },
+      "speech": {
+        "title": {
+          "en": "Speech",
+          "ru": "Речь"
+        }
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-echorus-voice",
+      "title": {
+        "en": "EchoRUS voice input",
+        "ru": "EchoRUS — голосовой ввод"
+      },
+      "description": {
+        "en": "Records from the microphone, transcribes locally with Whisper, inserts the text into the composer. No cloud, no API keys.",
+        "ru": "Записывает с микрофона, распознаёт локально через Whisper и вставляет текст в поле ввода. Без облака и API-ключей."
+      },
+      "icon": "icon.svg",
+      "author": "Shtazi98",
+      "homepage": "https://github.com/Shtazi98/echorus-voice#readme",
+      "repository": {
+        "url": "https://github.com/Shtazi98/echorus-voice"
+      },
+      "metadata": {
+        "category": "input",
+        "labels": [
+          "offline",
+          "russian",
+          "speech"
+        ],
+        "keywords": [
+          "voice",
+          "speech",
+          "whisper",
+          "russian",
+          "dictation"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1795571016,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Shtazi98/echorus-voice",
+            "commit": "d4e2e39b077ccbd4c826e81b3f6a66cf9f2328f6"
+          },
+          "engines": {
+            "dsh": ">=0.2.3-alpha.2 <0.3.0"
+          }
+        }
+      ]
+    }
+  ]
+}
