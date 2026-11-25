@@ -21,6 +21,8 @@ def main() -> int:
     parser.add_argument("wav")
     parser.add_argument("--model-path", required=True, help="local directory holding the CTranslate2 model")
     parser.add_argument("--lang", default="ru")
+    parser.add_argument("--hotwords", default=None, help="comma-separated terms to bias recognition")
+    parser.add_argument("--prompt", default=None, help="free-text context hint")
     args = parser.parse_args()
 
     from faster_whisper import WhisperModel
@@ -28,12 +30,17 @@ def main() -> int:
     language = None if args.lang in ("auto", "", None) else args.lang
     started = time.time()
     model = WhisperModel(args.model_path, device="cpu", compute_type="int8", local_files_only=True)
+    hotwords = None
+    if args.hotwords:
+        hotwords = " ".join(part.strip() for part in args.hotwords.split(",") if part.strip())
     segments, info = model.transcribe(
         args.wav,
         language=language,
         beam_size=5,
         vad_filter=True,
         condition_on_previous_text=False,
+        hotwords=hotwords,
+        initial_prompt=args.prompt,
     )
     parts = [segment.text.strip() for segment in segments if segment.text.strip()]
     elapsed = time.time() - started

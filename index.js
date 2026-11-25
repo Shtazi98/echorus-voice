@@ -274,6 +274,8 @@ export function apply(ctx, config) {
   const model = config.model ?? 'large-v3-turbo'
   const languages = config.languages ?? ['ru', 'en', 'auto']
   const keepAudio = config.keepAudio === true
+  const glossary = typeof config.glossary === 'string' ? config.glossary.trim() : ''
+  const customPrompt = typeof config.prompt === 'string' ? config.prompt.trim() : ''
   const autoSetup = config.autoSetup !== false
   const paths = venvPaths(dataRoot)
 
@@ -315,10 +317,15 @@ export function apply(ctx, config) {
         }
 
         try {
+          const base = customPrompt || (language === 'ru'
+            ? 'Это деловая диктовка на русском языке. Пиши с пунктуацией и заглавными буквами.'
+            : 'This is a work dictation. Write with punctuation and correct capitalisation.')
+          const extra = ['--prompt', glossary ? `${base} Термины: ${glossary}.` : base]
           const result = await run(python, [
             PY_SCRIPT, wav,
             '--model-path', join(paths.models, model),
             '--lang', language === 'auto' ? 'auto' : language,
+            ...extra,
           ], { env: { PYTHONPATH: paths.pylibs, HF_HUB_OFFLINE: '1' }, signal })
 
           if (result.code !== 0) {
