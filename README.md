@@ -7,6 +7,9 @@
 корейский и кантонский. EchoRUS добавляет в ту же кнопку микрофона распознаватель на Whisper:
 работает офлайн, без API-ключей и подписок, аудио не покидает машину.
 
+Как это делалось и что вылезло по дороге: [статья на русском](https://habr.com/ru/sandbox/316604/)
+и [English write-up](https://shtazi98.github.io/echorus-voice/en.html).
+
 ## Что нужно
 
 - Python 3.9+ в системе ([python.org](https://www.python.org/downloads/), на macOS и Linux обычно уже есть).
