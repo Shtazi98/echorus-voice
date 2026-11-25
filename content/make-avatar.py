@@ -45,13 +45,13 @@ def option_monogram():
     img = base()
     draw = ImageDraw.Draw(img)
     cy = SIZE // 2
-    for radius, width in ((120, 9), (150, 6)):
-        draw.arc([SIZE // 2 - radius + 34, cy - radius, SIZE // 2 + radius + 34, cy + radius],
-                 start=308, end=412, fill="#38bdf8", width=width)
-    font = ImageFont.truetype(str(FONTS / "segoeuib.ttf"), 230)
+    for radius, width in ((118, 8), (148, 6), (178, 4)):
+        draw.arc([SIZE // 2 - radius + 28, cy - radius, SIZE // 2 + radius + 28, cy + radius],
+                 start=302, end=418, fill="#38bdf8", width=width)
+    font = ImageFont.truetype(str(FONTS / "segoeuib.ttf"), 250)
     box = draw.textbbox((0, 0), "E", font=font)
     w, h = box[2] - box[0], box[3] - box[1]
-    draw.text((SIZE * 0.40 - w / 2 - box[0], (SIZE - h) / 2 - box[1] - 4), "E", font=font, fill="#f4f7fb")
+    draw.text((SIZE * 0.44 - w / 2 - box[0], (SIZE - h) / 2 - box[1] - 10), "E", font=font, fill="#f4f7fb")
     return img
 
 
