@@ -28,8 +28,27 @@ function venvPaths(dataRoot) {
   }
 }
 
-function run(bin, args, options = {}) {
-  const { env, signal, stdin } = options
+/** Parse "Старлинк=Starlink, Хаймерс=HIMARS" into replacement pairs. */
+function parseReplacements(value) {
+  if (typeof value !== 'string' || value.trim() === '') return []
+  return value
+    .split(',')
+    .map((pair) => pair.split('='))
+    .filter((parts) => parts.length === 2 && parts[0].trim() !== '' && parts[1].trim() !== '')
+    .map(([from, to]) => [from.trim(), to.trim()])
+}
+
+/** Replace whole words only, so "старлинк" inside another word stays untouched. */
+function applyReplacements(text, pairs) {
+  let result = text
+  for (const [from, to] of pairs) {
+    const escaped = from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    result = result.replace(new RegExp(`(?<![\\p{L}\\p{N}])${escaped}(?![\\p{L}\\p{N}])`, 'giu'), to)
+  }
+  return result
+}
+
+function run(bin, args, options = {}) {  const { env, signal, stdin } = options
   return new Promise((resolve, reject) => {
     const child = spawn(bin, args, {
       windowsHide: true,
@@ -276,6 +295,7 @@ export function apply(ctx, config) {
   const keepAudio = config.keepAudio === true
   const glossary = typeof config.glossary === 'string' ? config.glossary.trim() : ''
   const customPrompt = typeof config.prompt === 'string' ? config.prompt.trim() : ''
+  const replacements = parseReplacements(config.replacements)
   const autoSetup = config.autoSetup !== false
   const paths = venvPaths(dataRoot)
 
@@ -339,7 +359,7 @@ export function apply(ctx, config) {
             throw new Error('Whisper returned unreadable output: ' + line.slice(0, 300))
           }
           return {
-            text: parsed.text ?? '',
+            text: applyReplacements(parsed.text ?? '', replacements),
             audioSeconds: Number(parsed.audio_seconds ?? 0),
             inferenceSeconds: Number(parsed.inference_seconds ?? 0),
           }
