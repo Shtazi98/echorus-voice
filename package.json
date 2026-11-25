@@ -1,0 +1,41 @@
+{
+  "name": "dsh-echorus-voice",
+  "version": "0.1.0",
+  "description": "Local multilingual voice input for DeepSeek Harness, powered by Whisper. Russian first, no cloud, no API keys.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "icon": "./icon.svg",
+  "files": [
+    "index.js",
+    "python",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "docs",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "voice",
+    "speech-to-text",
+    "whisper",
+    "russian"
+  ],
+  "license": "MIT",
+  "engines": {
+    "dsh": ">=0.2.3-alpha.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

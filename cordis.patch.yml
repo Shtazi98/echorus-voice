@@ -1,0 +1,11 @@
+- insert:
+    - id: echorus-voice
+      name: dsh-echorus-voice
+      config:
+        dataRoot: !!js dshHomePath('echorus-voice')
+        model: large-v3-turbo
+
+- id: speech-to-text
+  config:
+    defaultProvider: echorus-local
+    language: ru

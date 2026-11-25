@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "EchoRUS voice input",
+    "description": "Local Whisper voice input for any language, Russian first. Installs its own recognition runtime on first use; audio never leaves the machine.",
+    "detail": "docs/DETAIL.md"
+  }
+}
