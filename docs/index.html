@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EchoRUS — голосовой ввод для DeepSeek Harness</title>
+<meta name="description" content="Локальный голосовой ввод на Whisper для DeepSeek Harness. Русский в приоритете, без облака и API-ключей.">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 48px 20px 80px;
+    font: 16px/1.6 -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #0b1220; color: #dbe4f0;
+  }
+  main { max-width: 760px; margin: 0 auto; }
+  header { display: flex; align-items: center; gap: 18px; margin-bottom: 28px; }
+  header svg { width: 64px; height: 64px; flex: none; }
+  h1 { margin: 0; font-size: 30px; letter-spacing: -0.02em; }
+  .tagline { margin: 4px 0 0; color: #8ea3bf; font-size: 15px; }
+  h2 { margin: 40px 0 12px; font-size: 20px; }
+  p { margin: 0 0 14px; }
+  ol, ul { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  code, pre {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    background: #131d2f; border: 1px solid #22314a; border-radius: 8px;
+  }
+  code { padding: 2px 6px; font-size: 14px; }
+  pre { padding: 14px 16px; overflow-x: auto; font-size: 14px; }
+  pre code { background: none; border: 0; padding: 0; }
+  a { color: #6cb2ff; }
+  .note { border-left: 3px solid #2b6cb0; padding: 2px 0 2px 14px; color: #a9bbd3; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .card { background: #101a2b; border: 1px solid #1e2c44; border-radius: 12px; padding: 16px 18px; }
+  .card h3 { margin: 0 0 6px; font-size: 15px; color: #e7eefb; }
+  .card p { margin: 0; font-size: 14px; color: #9fb2cc; }
+  footer { margin-top: 56px; color: #6f8099; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="EchoRUS">
+      <rect x="2" y="2" width="60" height="60" rx="15" fill="#10233c"/>
+      <rect x="27" y="13" width="10" height="20" rx="5" fill="#f4f7fb"/>
+      <path d="M22 30a10 10 0 0 0 20 0" fill="none" stroke="#f4f7fb" stroke-width="3.4" stroke-linecap="round"/>
+      <line x1="32" y1="40" x2="32" y2="46" stroke="#f4f7fb" stroke-width="3.4" stroke-linecap="round"/>
+      <path d="M16 30a16 16 0 0 1 4-10" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+      <path d="M48 30a16 16 0 0 0-4-10" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+      <line x1="26" y1="52" x2="38" y2="52" stroke="#f4f7fb" stroke-width="3.4" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <h1>EchoRUS</h1>
+      <p class="tagline">Голосовой ввод на Whisper для DeepSeek Harness. Русский в приоритете.</p>
+    </div>
+  </header>
+
+  <p>Говорите вместо того, чтобы печатать. Кнопка микрофона в поле ввода записывает голос, распознаёт его
+  локально и вставляет текст в чат. Аудио не покидает компьютер, ключи и подписки не нужны.</p>
+
+  <p>Штатный голосовой ввод DSH понимает китайский, английский, японский, корейский и кантонский.
+  EchoRUS добавляет Whisper — русский и ещё около сотни языков.</p>
+
+  <h2>Установка</h2>
+  <ol>
+    <li>Откройте <strong>Plugins → Discover → Add index</strong> и вставьте адрес:
+      <pre><code>https://shtazi98.github.io/echorus-voice/index.json</code></pre>
+    </li>
+    <li>Найдите в каталоге <strong>EchoRUS voice input</strong> и нажмите <strong>Install</strong>.</li>
+    <li>Первый запуск скачает распознаватель и модель (~2 ГБ). Прогресс виден в настройках голосового ввода.</li>
+  </ol>
+
+  <p class="note">Без каталога плагин ставится напрямую: <strong>Plugins → Add plugin</strong> и строка
+  <code>github:Shtazi98/echorus-voice</code>. Для этого способа нужен установленный <code>git</code>.</p>
+
+  <h2>Что требуется</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Python 3.9+</h3>
+      <p>Плагин найдёт его сам. Другой интерпретатор задаётся переменной <code>ECHORUS_PYTHON</code>.</p>
+    </div>
+    <div class="card">
+      <h3>~2 ГБ на диске</h3>
+      <p>Пакеты распознавателя и модель. GPU не нужен, хватает процессора.</p>
+    </div>
+    <div class="card">
+      <h3>Интернет один раз</h3>
+      <p>Только на первой установке. Дальше распознавание работает офлайн.</p>
+    </div>
+  </div>
+
+  <h2>Настройка под себя</h2>
+  <p>В строке плагина доступны <code>model</code> (от <code>small</code> до <code>large-v3</code>),
+  <code>glossary</code> — список ваших терминов, и <code>replacements</code> — словарь подстановок,
+  который пишет названия латиницей: <code>Старлинк=Starlink</code>.</p>
+
+  <h2>Приватность</h2>
+  <p>Запись передаётся только локальному процессу на вашей машине, распознаётся локально и сразу удаляется.
+  Наружу уходят лишь запросы на скачивание пакетов и модели при первой установке.</p>
+
+  <footer>
+    <a href="https://github.com/Shtazi98/echorus-voice">Исходный код и документация</a> · MIT ·
+    модель Whisper распространяется отдельно
+  </footer>
+</main>
+</body>
+</html>
